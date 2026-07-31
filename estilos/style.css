@@ -22,11 +22,22 @@
   --fundo-card: #ffffff;
 }
 
+body.escuro {
+  --fundo-principal:#222222;
+  --texto:#e0e0e0;
+  --texto-inverso:#333333;
+  --destaque:#ff5522;
+  --destaque-inverso:#a73917;
+  --fundo-card:#444444;
+
+}
+
 body{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   line-height: 1.5em;
   background-color: var(--fundo-principal);
   color: var(--texto);
+  transition: background-color 0.8s,color 0.8s;
 }
 
 header{
@@ -36,7 +47,11 @@ header{
   display: flex;
   justify-content: flex-end;/*Colando icones a direita da pagina*/
   align-content: center;
+  position: sticky;/*fixando menu durante a rolagem*/
+  top: 0;                /*<-*/
+  z-index: 1; /*"ajeitando camadas" valor padrão 0*/
 }
+
 
 nav#menu ul {
   list-style: none;
@@ -122,7 +137,7 @@ article {
 
 article h2 {
   color: var(--destaque);
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .video-container {
@@ -176,8 +191,120 @@ article h2 {
   border-radius: 4px;
 }
 
-@media screen and (min-width: 768px) {/*Dividindo a barra pra tela do celular*/
+#formacao-container {/*Colocando a ordem invertida(do mais recente pro mais antigo)*/
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+}
+
+#formacao-container .curso {
+  background-color: var(--fundo-principal);
+  border-radius: 8px;
+  border-left: 5px solid var(--destaque-inverso);
+  padding-left: 15px;
+  transition: border-width 0.5s; 
+}
+
+#formacao-container .curso:hover {/*Efeito ao passar o mouse(alargando a borda) */
+  border-left-width: 15px;
+  border-color: var(--destaque);
+  cursor: pointer;/*Cursor vira "mãozinha"*/
+}
+
+#formacao-container .periodo {
+  font-size: 0.8em;
+  font-weight: bold;
+  color: var(--texto);
+}
+
+#formacao-container .instituicao {
+  color: var(--destaque-inverso);
+  font-size: 1.1em;
+}
+
+#projeto-container {
+  display: flex;
+  flex-direction: column-reverse;/*Colocando ultimo ao primeiro*/
+  gap: 20px;
+}
+
+#projeto-container .projeto {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--fundo-principal);
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 5px solid var(--destaque-inverso);
+  transition: border-color 0.5s, border-width 0.5s;
+}
+
+#projeto-container .projeto:hover {
+  border-color: var(--destaque);
+  border-left-width: 15px;
+  cursor: pointer;
+}
+
+#projeto-container .foto {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+footer {
+  background-color: var(--destaque);
+  color: var(--texto-inverso);
+  text-align: center;
+  padding: 15px;
+}
+
+footer a {
+  color: var(--texto-inverso);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  color: var(--destaque-inverso);
+}
+
+@media screen and (min-width: 768px) {/*Ajustes para telas maiores*/
+    main {
+      grid-template-columns: auto 300px 1fr auto;/*Dimensionando o grid dividido*/
+    }
+
+    section#ficha { /*Posicionando e travando a rolagem*/
+      grid-column: 2 / 3;
+
+      height: fit-content;
+      position: sticky;
+      top: 65px;
+
+    }
+
+    section#detalhes {/*Posicionando*/
+      grid-column: 3 / 4;
+    }
+
     #skill-container {
       grid-template-columns: 1fr 1fr;
     }
+
+    #projeto-container .projeto {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+
+    #projeto-container .projeto-info {
+      max-width: 80%;
+    }
+
+    #projeto-container .foto{
+      aspect-ratio: 1/1;
+      max-width: 20%;
+      max-height: 200px;
+    }
 }
+
